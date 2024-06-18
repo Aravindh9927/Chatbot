@@ -1,0 +1,47 @@
+import os
+import fitz #PyMuPdf
+
+def split_pdf(pdf_path,output_dir,pages_per_chunk=1):
+    #open doc
+    document=fitz.open(pdf_path)
+    total_pages=len(document)
+    
+    #create Chunk
+    chunk_number=0
+    for start_page in range(0,total_pages,pages_per_chunk):
+        chunk_number+=1
+        #end page
+        end_page=min(start_page+pages_per_chunk,total_pages)
+        #create a Pdf for each chunk
+        chunk_pdf=fitz.open()
+        for page_num in range(start_page,end_page):
+            chunk_pdf.insert_pdf(document,from_page=page_num,to_page=page_num)
+        #save the chunk pdf
+        chunk_pdf_path=f"{output_dir}/chunk_{chunk_number}.txt"
+        chunk_pdf.save(chunk_pdf_path)
+        chunk_pdf.close()
+        print(f"Saved chunk {chunk_number} as {chunk_pdf_path}")
+    document.close()
+
+#Example usage
+pdf_path='D:/2. Company policy.pdf'
+output_dir='output_chunks'
+pages_per_chunk=2
+
+split_pdf(pdf_path,output_dir,pages_per_chunk)
+    
+
+  import requests
+
+# URL of the chunk_1.pdf file
+pdf_url = 'http://example.com/output_chunks/chunk_7.txt'  # Replace with the actual URL
+
+# Path where you want to save the downloaded PDF
+save_path = 'D:/chunk_7.txt'  # Replace with the desired save path
+
+# Download the PDF
+response = requests.get(pdf_url)
+with open(save_path, 'wb') as f:
+    f.write(response.content)
+
+print(f"Downloaded chunk_7.txt to {save_path}")
