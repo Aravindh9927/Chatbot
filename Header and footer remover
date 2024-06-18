@@ -1,0 +1,30 @@
+def remove_header_footer(a, b, header_lines=1, footer_lines=1):
+    try:
+        
+        with open(a, 'r', encoding='utf-8') as file:
+            lines = file.readlines()
+
+        
+        content = lines[header_lines:len(lines) - footer_lines]
+
+        
+        with open(b, 'w', encoding='utf-8') as file:
+            file.writelines(content)
+
+        print(f"Header and footer removed. Content saved to {b}")
+
+    except FileNotFoundError as e:
+        print(f"Error: {e}")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+
+
+a = r'D:/UNIT 2.txt'
+b = 'processed_file.txt'
+remove_header_footer(a, b, header_lines=1, footer_lines=1)
+
+
+from IPython.display import FileLink
+
+# Create a download link for the processed_file.txt
+display(FileLink('processed_file.txt'))
