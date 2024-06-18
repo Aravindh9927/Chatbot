@@ -1,0 +1,30 @@
+!pip install sentence-transformers
+from sentence_transformers import SentenceTransformer
+import sys
+print(sys.executable)
+# Install the library
+!pip install sentence-transformers
+
+# Import the library
+from sentence_transformers import SentenceTransformer
+
+# Load the pre-trained model
+model = SentenceTransformer('all-MiniLM-L6-v2')
+
+# Function to convert text chunks into embeddings
+def convert_text_to_embeddings(text_chunks):
+    embeddings = model.encode(text_chunks)
+    return embeddings
+
+# Example usage
+text_chunks = [
+    "D:/Hi.txt",
+    "D:/Hi2.txt",
+    "D:/md5sum.txt"
+]
+
+embeddings = convert_text_to_embeddings(text_chunks)
+
+# Print the embeddings
+for i, embedding in enumerate(embeddings):
+    print(f"Embedding for chunk {i+1}: {embedding[:3]}...")  
